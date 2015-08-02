@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuActivity" >
+
+    <Button
+        android:id="@+id/bMenuPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/bMenuSettings"
+        android:onClick="clickPlay"
+        android:text="Play" />
+
+    <Button
+        android:id="@+id/bMenuSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/bMenuPlay"
+        android:onClick="clickSettings"
+        android:text="Settings" />
+
+    <Button
+        android:id="@+id/bMenuStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/bMenuSettings"
+        android:layout_below="@+id/bMenuSettings"
+        android:onClick="clickStats"
+        android:text="Stats" />
+
+    <Button
+        android:id="@+id/bMenuLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/bMenuSettings"
+        android:layout_below="@+id/bMenuStats"
+        android:onClick="clickLogout"
+        android:text="Logout" />
+
+</RelativeLayout>
