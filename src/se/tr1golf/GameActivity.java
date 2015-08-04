@@ -1,70 +1,42 @@
 package se.tr1golf;
 
-import java.util.ArrayList;
-
-import se.tr1golf.classes.Game;
-import se.tr1golf.classes.HoleScore;
-import se.tr1golf.classes.Round;
-import se.tr1golf.model.AppRoundModel;
+import se.tr1golf.fragment.GameActivityPagerPage;
 import se.tr1golf.singleton.Instance;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
 
-public class GameActivity extends Activity {
+public class GameActivity extends FragmentActivity {
 
-	// Initiate
-	
-	private Round newround;
-	private HoleScore hs;
-	private TextView total;
-	private TextView hole;
-	private Button next_tee;
-	private Button previous_tee;
-	private TextView par;
-	private Spinner throwspinner;
+	// Initiate	
+	private static final int NUM_PAGES = 5;
 	private AlertDialog alert;
-	private int hole_count;
-	private ArrayList<Integer> parlist;
-	private AppRoundModel parmodel = new AppRoundModel();
-	private Game CurrentGame;
-	private int plusminus;
+	private ViewPager mPager;
+	private PagerAdapter mPagerAdapter;
 
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game);
-		// Initiate data
-		total = (TextView) findViewById(R.id.Game_Bottom_Total);
-		hole = (TextView) findViewById(R.id.Game_Bottom_HoleCount);
-		next_tee = (Button) findViewById(R.id.gamebNexttee);
-		previous_tee = (Button) findViewById(R.id.gamebPrevioustee);
-		par = (TextView) findViewById(R.id.gametxtpair);
-		init();
-		setValues();
-	}
+        setContentView(R.layout.game_activity_pager_container);
 
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+	
+        init();
+	}
+	
 	private void init() {
 		try {
-			// Throw Spinner
-			throwspinner = (Spinner) findViewById(R.id.Game_Center_Spinner);
-			ArrayAdapter<CharSequence> adapter = ArrayAdapter
-					.createFromResource(this, R.array.throws_count,
-							android.R.layout.simple_spinner_item);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			throwspinner.setAdapter(adapter);
-
+			
 			// Exit round messagebox
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage("Are you sure you want to end this round?")
@@ -73,10 +45,6 @@ public class GameActivity extends Activity {
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int id) {
-									//CurrentGame.setDone(true);
-									//CurrentGame.setRunning(false);	
-									startActivity(new Intent(
-											"android.intent.action.MENU"));
 									finish();
 								}
 							})
@@ -87,112 +55,15 @@ public class GameActivity extends Activity {
 									dialog.cancel();
 								}
 							});
-			alert = builder.create();
-
-			//CurrentGame.done = false;// .setDone(false);
-			//CurrentGame.setRunning(true);		
-			
-			// Get RoundID
-			/*JSONObject roundrow = new JSONObject(
-					DatabaseReader.get_unique_roundid(roundmodel));*/
-			
-			parlist = new ArrayList<Integer>();
-			parlist.add(2);
-			parlist.add(3);
-			parlist.add(4);
-			parlist.add(2);
-			parlist.add(4);
-			parlist.add(3);
-			parlist.add(2);
-			parlist.add(5);
-			parlist.add(4);
-			parlist.add(3);
-			parlist.add(3);
-			parlist.add(2);
-			parlist.add(3);
-			parlist.add(4);
-			parlist.add(3);
-			parlist.add(3);
-			parlist.add(2);
-			parlist.add(3);				
-			
-			/*ArrayList<Integer> parlist = DatabaseReader.get_parlist(parmodel);
-			for (int i = 0; i < parlist.size(); i++) {
-				dump.add_par(parlist.get(i));
-			}*/
-			
+			alert = builder.create();				
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
-	
-	private void setValues() {
-		CurrentGame = Instance.getInstance().getGame();
-		total.setText(String.valueOf(0));
-		CurrentGame.setTotalScore(0);
-		hole.setText(String.valueOf(hole_count));
-		throwspinner.setSelection(2);
-		setTitle(CurrentGame.getCoursename());
-		//parmodel.setCourseID(CurrentGame.getCourseid());
-		Game.setParlist(parlist);
-		par.setText(String.valueOf(CurrentGame.getPair(hole_count)));
-	}
 
-	public void clickNextTee(View view) {
-		try {
-			set_score();
-			if (endofgame() == true) {
-				// PARSE OBJECTS TO ENDGAME ENTITY
-				Intent intent = new Intent(
-						"android.intent.action.ENDGAME");
-				intent.putExtra("holescore",
-						newround.get_holescore_array());
-				startActivity(intent);
-				finish();
-			}
-			// If the service isn't running, start it
-			if (CurrentGame.isRunning() == false) {
-				// startService(new Intent(Game.this, MyService.class));
-				start_service();
-			}
-			String ext = "";
-			if (CurrentGame.getPlusminus() > 0) {
-				ext = "+";
-			}
-			total.setText(String.valueOf(CurrentGame.getTotalScore()) + "(" + ext
-					+ CurrentGame.getPlusminus() + ")");
-			hole_count++;
-			set_spinner_value();
-			par.setText(String.valueOf(CurrentGame.getPair(hole_count)));
-			hole.setText(String.valueOf(hole_count));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void clickPreviousTee(View view) {
-		try {
-			if (hole_count != 1) {
-				hole_count--;
-				set_spinner_value();
-				par.setText(String.valueOf(CurrentGame.getPair(hole_count)));
-				hole.setText(String.valueOf(hole_count));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public boolean endofgame() {
-		if (hole_count > 18) {
-			return true;
-		}
-		return false;
-	}
-
-	public void upload_score() {
+	/*public void upload_score() {
 		int score = Integer.decode(throwspinner.getSelectedItem().toString());
 		// Only upload score that either is new or modified
 		hs = new HoleScore(score, hole_count);
@@ -243,7 +114,7 @@ public class GameActivity extends Activity {
 		Log.d("MyService", "onClick: starting service");
 		/*startService(new Intent(Game.this, MyService.class));
 		dump.uploadrunning = true;*/
-	}
+	/*}
 
 	public void set_spinner_value() {
 		// If the hole already been played, set the spinner to it's value
@@ -257,6 +128,7 @@ public class GameActivity extends Activity {
 			throwspinner.setSelection(2);
 		}
 	}
+	*/
 
 	// ****************************
 	// Section for key events
@@ -273,5 +145,25 @@ public class GameActivity extends Activity {
 
 		return true;
 	}
+	
+	/**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return new GameActivityPagerPage(position + 1);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+    }
 
 }

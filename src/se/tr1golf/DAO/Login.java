@@ -32,8 +32,8 @@ public class Login extends AsyncTask<Void, Integer, String> {
 					+ "/JSON/AppLogin");
 
 			JSONObject data = new JSONObject();
-			data.put("Username", model.get_username());
-			data.put("Password", model.get_password());
+			//data.put("Username", model.get_username());
+			//data.put("Password", model.get_password());
 			httppost.setEntity(new ByteArrayEntity(data.toString().getBytes(
 					"UTF8")));
 			httppost.addHeader("Content-Type",

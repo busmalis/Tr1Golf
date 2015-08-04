@@ -13,17 +13,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
 import se.tr1golf.misc.converter;
-import se.tr1golf.model.AppRoundModel;
-
 import android.content.Context;
 import android.os.AsyncTask;
 
 public class GetUniqueRoundId extends AsyncTask<Void, Integer, String> {
 	String a;
-	AppRoundModel model;
+	//AppRoundModel model;
 
-	public GetUniqueRoundId(Context context, AppRoundModel roundmodel) {
-		model = roundmodel;
+	public GetUniqueRoundId(Context context){//, AppRoundModel roundmodel) {
+		//model = roundmodel;
 	}
 
 	@Override
@@ -35,12 +33,12 @@ public class GetUniqueRoundId extends AsyncTask<Void, Integer, String> {
 					+ "/JSON/GetUniqueRoundID");
 
 			JSONObject data = new JSONObject();
-			data.put("Coursename", model.getCoursename());
+			/*data.put("Coursename", model.getCoursename());
 			data.put("HoleID", model.getHoleID());
 			data.put("CourseID", model.getCourseID());
 			data.put("RoundID", model.getRoundID());
 			data.put("Date", model.getDate());
-
+*/
 			httppost.setEntity(new ByteArrayEntity(data.toString().getBytes(
 					"UTF8")));
 			httppost.addHeader("Content-Type",

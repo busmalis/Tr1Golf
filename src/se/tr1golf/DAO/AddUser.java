@@ -35,9 +35,9 @@ public class AddUser extends AsyncTask<Void, Integer, String> {
 					+ "/JSON/AppSignup");
 
 			JSONObject data = new JSONObject();
-			data.put("Username", model.getUsername());
+			/*data.put("Username", model.getUsername());
 			data.put("Password", model.getPassword());
-			httppost.setEntity(new ByteArrayEntity(data.toString().getBytes(
+			*/httppost.setEntity(new ByteArrayEntity(data.toString().getBytes(
 					"UTF8")));
 			httppost.addHeader("Content-Type",
 					"application/json; charset=utf-8");

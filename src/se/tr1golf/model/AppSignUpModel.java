@@ -1,56 +1,38 @@
 package se.tr1golf.model;
 
+import se.tr1golf.classes.User;
+
 public class AppSignUpModel {
-	String Username;
-	String Password;
-	Boolean Active;
+	private User user;
 
-	public AppSignUpModel(String username, String password) {
-		this.Username = username;
-		this.Password = password;
-		this.Active = false;
+	public AppSignUpModel(Builder builder) {
+		this.setUser(builder.user);
 	}
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return Username;
+	public User getUser() {
+		return user;
 	}
 
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		Username = username;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return Password;
-	}
+	public static class Builder {
+		private User user;
 
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		Password = password;
-	}
+		public Builder setUser(User user) {
+			this.user = user;
+			return this;
+		}
 
-	/**
-	 * @return the active
-	 */
-	public Boolean getActive() {
-		return Active;
-	}
+		public AppSignUpModel build() {
+			AppSignUpModel model = new AppSignUpModel(this);
+			validateModel(model);
+			return model;
+		}
 
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(Boolean active) {
-		Active = active;
-	}
+		private void validateModel(AppSignUpModel model) {
 
+		}
+	}
 }

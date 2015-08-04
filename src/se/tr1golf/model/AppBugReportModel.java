@@ -1,57 +1,55 @@
 package se.tr1golf.model;
 
+import se.tr1golf.classes.Bug;
+import se.tr1golf.classes.User;
+
 public class AppBugReportModel {
-	String Date;
-	String BugText;
-	int UserID;
+	private Bug bug;
+	private User user;
 
-	public AppBugReportModel(String date, String bugtext, int userid) {
-		this.Date = date;
-		this.BugText = bugtext;
-		this.UserID = userid;
+	public AppBugReportModel(Builder builder) {
+		this.setBug(builder.bug);
+		this.user = builder.user;
+	}	
+
+	public User getUser() {
+		return user;
 	}
 
-	/**
-	 * @return the date
-	 */
-	public String getDate() {
-		return Date;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	/**
-	 * @param date the date to set
-	 */
-	public void setDate(String date) {
-		Date = date;
+	public Bug getBug() {
+		return bug;
 	}
 
-	/**
-	 * @return the bugText
-	 */
-	public String getBugText() {
-		return BugText;
+	public void setBug(Bug bug) {
+		this.bug = bug;
 	}
 
-	/**
-	 * @param bugText the bugText to set
-	 */
-	public void setBugText(String bugText) {
-		BugText = bugText;
+	public static class Builder {
+		private Bug bug;
+		private User user;
+
+		public Builder setBug(Bug bug) {
+			this.bug = bug;
+			return this;
+		}
+
+		public Builder setUser(User user) {
+			this.user = user;
+			return this;
+		}
+
+		public AppBugReportModel build() {
+			AppBugReportModel model = new AppBugReportModel(this);
+			validateBuild(model);
+			return model;
+		}
+
+		private void validateBuild(AppBugReportModel model) {
+
+		}
 	}
-
-	/**
-	 * @return the userID
-	 */
-	public int getUserID() {
-		return UserID;
-	}
-
-	/**
-	 * @param userID the userID to set
-	 */
-	public void setUserID(int userID) {
-		UserID = userID;
-	}
-
-
 }

@@ -13,15 +13,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
 import se.tr1golf.misc.converter;
-import se.tr1golf.model.AppRoundModel;
-
 import android.content.Context;
 import android.os.AsyncTask;
 
 public class AddGame extends AsyncTask<Void, Integer, String>{
-	AppRoundModel model;
-    public AddGame(Context context, AppRoundModel model){
-    	this.model = model;
+	//AppRoundModel model;
+    public AddGame(Context context, int model){
+    	//this.model = model;
     }
     
 	@Override
@@ -33,7 +31,7 @@ public class AddGame extends AsyncTask<Void, Integer, String>{
 					+ "/JSON/CreateRound");
 	    	
 	    	JSONObject data = new JSONObject();
-			data.put("CourseID", model.getCourseID());
+			//data.put("CourseID", model.getCourseID());
 			httppost.setEntity(new ByteArrayEntity(data.toString().getBytes("UTF8")));
 			httppost.addHeader("Content-Type", "application/json; charset=utf-8");
 			httppost.setHeader("json", data.toString());

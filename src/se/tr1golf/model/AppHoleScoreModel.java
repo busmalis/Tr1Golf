@@ -1,90 +1,72 @@
 package se.tr1golf.model;
 
+import se.tr1golf.classes.Course;
+import se.tr1golf.classes.Round;
+import se.tr1golf.classes.User;
+
 public class AppHoleScoreModel {
-	int UserID;
-	int CourseID;
-	int HoleID;
-	int Score;
-	int RoundID;
+	private User user;
+	private Course course;
+	private Round round;
 
-	public AppHoleScoreModel(int userid, int courseid, int holeid, int score,
-			int roundid) {
-		this.UserID = userid;
-		this.CourseID = courseid;
-		this.HoleID = holeid;
-		this.Score = score;
-		this.RoundID = roundid;
+	public AppHoleScoreModel(Builder builder) {
+		this.user = builder.user;
+		this.course = builder.course;
+		this.round = builder.round;
 	}
 
-	/**
-	 * @return the userID
-	 */
-	public int getUserID() {
-		return UserID;
+	public User getUser() {
+		return user;
 	}
 
-	/**
-	 * @param userID the userID to set
-	 */
-	public void setUserID(int userID) {
-		UserID = userID;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	/**
-	 * @return the courseID
-	 */
-	public int getCourseID() {
-		return CourseID;
+	public Course getCourse() {
+		return course;
 	}
 
-	/**
-	 * @param courseID the courseID to set
-	 */
-	public void setCourseID(int courseID) {
-		CourseID = courseID;
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
-	/**
-	 * @return the holeID
-	 */
-	public int getHoleID() {
-		return HoleID;
+	public Round getRound() {
+		return round;
 	}
 
-	/**
-	 * @param holeID the holeID to set
-	 */
-	public void setHoleID(int holeID) {
-		HoleID = holeID;
+	public void setRound(Round round) {
+		this.round = round;
 	}
 
-	/**
-	 * @return the score
-	 */
-	public int getScore() {
-		return Score;
-	}
+	public static class Builder {
+		private User user;
+		private Course course;
+		private Round round;
 
-	/**
-	 * @param score the score to set
-	 */
-	public void setScore(int score) {
-		Score = score;
-	}
+		public Builder setUser(User user) {
+			this.user = user;
+			return this;
+		}
 
-	/**
-	 * @return the roundID
-	 */
-	public int getRoundID() {
-		return RoundID;
-	}
+		public Builder setCourse(Course course) {
+			this.course = course;
+			return this;
+		}
 
-	/**
-	 * @param roundID the roundID to set
-	 */
-	public void setRoundID(int roundID) {
-		RoundID = roundID;
-	}
+		public Builder setRound(Round round) {
+			this.round = round;
+			return this;
+		}
 
-	
+		public AppHoleScoreModel build() {
+			AppHoleScoreModel model = new AppHoleScoreModel(this);
+			validateModel(model);
+			return model;
+		}
+
+		private void validateModel(AppHoleScoreModel model) {
+
+		}
+	}
 }

@@ -1,40 +1,54 @@
 package se.tr1golf.classes;
 
 public class Course {
-	private int courseid;
-	private String coursename;
+	private int courseId;
+	private String courseName;
 
-	public Course(int courseid, String coursename) {
-		this.courseid = courseid;
-		this.coursename = coursename;
+	public Course(Builder builder) {
+		this.courseId = builder.courseId;
+		this.courseName = builder.courseName;
 	}
 
-	/**
-	 * @return the courseid
-	 */
-	public int getCourseid() {
-		return courseid;
+	public int getCourseId() {
+		return courseId;
 	}
 
-	/**
-	 * @param courseid the courseid to set
-	 */
-	public void setCourseid(int courseid) {
-		this.courseid = courseid;
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
 	}
 
-	/**
-	 * @return the coursename
-	 */
-	public String getCoursename() {
-		return coursename;
+	public String getCourseName() {
+		return courseName;
 	}
 
-	/**
-	 * @param coursename the coursename to set
-	 */
-	public void setCoursename(String coursename) {
-		this.coursename = coursename;
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public static class Builder{
+		private int courseId;
+		private String courseName;
+		
+		public Builder setCourseId(int courseId){
+			this.courseId = courseId;
+			return this;
+		}
+		
+		public Builder setCourseName(String courseName){
+			this.courseName = courseName;
+			return this;
+		}
+		
+		public Course build(){
+			Course course = new Course(this);
+			validate(course);
+			return course;
+		}
+
+		private void validate(Course course) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 
 }

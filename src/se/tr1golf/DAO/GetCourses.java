@@ -39,9 +39,9 @@ public class GetCourses extends AsyncTask<Void, Integer, ArrayList<Course>> {
 				JSONArray array = new JSONArray(result);
 				for (int i = 0; i < array.length(); i++) {
 					JSONObject row = array.getJSONObject(i);
-					Course course = new Course(row.getInt("Id"),
+					/*Course course = new Course(row.getInt("Id"),
 							row.getString("Name"));
-					a.add(course);
+					a.add(course);*/
 				}
 				return a;
 			}

@@ -34,10 +34,10 @@ public class AddBug extends AsyncTask<Void, Integer, String>{
 					+ "/JSON/AppBugReport");
 	    	
 	    	JSONObject data = new JSONObject();
-			data.put("Date", model.getDate());
+			/*data.put("Date", model.getDate());
 			data.put("BugText", model.getBugText());
 			data.put("UserID", model.getUserID());
-			httppost.setEntity(new ByteArrayEntity(data.toString().getBytes("UTF8")));
+			*/httppost.setEntity(new ByteArrayEntity(data.toString().getBytes("UTF8")));
 			httppost.addHeader("Content-Type", "application/json; charset=utf-8");
 			httppost.setHeader("json", data.toString());
 	    	try {

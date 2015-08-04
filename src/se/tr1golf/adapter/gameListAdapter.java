@@ -1,8 +1,7 @@
 package se.tr1golf.adapter;
 import java.util.ArrayList;
 
-import se.tr1golf.model.AppGameListModel;
-import se.tr1golf.singleton.Instance;
+import se.tr1golf.model.AppGameModel;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,12 @@ import android.widget.TextView;
 
 public class gameListAdapter extends BaseExpandableListAdapter {
 	private Context context;
-	static private ArrayList<AppGameListModel> parentlist = Instance
-			.getInstance().getGames();
+	private ArrayList<AppGameModel> gameListData = new ArrayList<AppGameModel>();
 
-	public gameListAdapter(Context context) {
+	public gameListAdapter(Context context, ArrayList<AppGameModel> gameListData) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
+		this.gameListData = gameListData;
 	}
 
 	@Override
@@ -36,9 +35,9 @@ public class gameListAdapter extends BaseExpandableListAdapter {
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		TextView tv = new TextView(context);
-		if (parentlist.get(groupPosition).getPlayers().size() > 0) {
-			tv.setText(parentlist.get(groupPosition).getPlayers()
-					.get(childPosition).getUsername());
+		if (gameListData.get(groupPosition).getPlayers().size() > 0) {
+			tv.setText(gameListData.get(groupPosition).getPlayers()
+					.get(childPosition).getUserName());
 			tv.setPadding(70, 5, 0, 5);
 		} else {
 			tv.setText("Empty");
@@ -50,7 +49,7 @@ public class gameListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		// TODO Auto-generated method stub
-		return parentlist.get(groupPosition).getPlayers().size();
+		return gameListData.get(groupPosition).getPlayers().size();
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class gameListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public int getGroupCount() {
 		// TODO Auto-generated method stub
-		return parentlist.size();
+		return gameListData.size();
 	}
 
 	@Override
@@ -76,8 +75,7 @@ public class gameListAdapter extends BaseExpandableListAdapter {
 			View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		TextView tv = new TextView(context);
-		tv.setText("Course: " + parentlist.get(groupPosition).getCoursename()
-				+ "\nRound: " + parentlist.get(groupPosition).getRoundID());
+		tv.setText("Course: " + gameListData.get(groupPosition).getCourse().getCourseName());
 		tv.setPadding(60, 5, 0, 5);
 
 		return tv;

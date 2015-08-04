@@ -16,33 +16,31 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.tr1golf.misc.converter;
-import se.tr1golf.model.AppRoundListModel;
-
 import android.content.Context;
 import android.os.AsyncTask;
 
 public class GetScoreList extends
-		AsyncTask<Void, Integer, ArrayList<AppRoundListModel>> {
-	ArrayList<AppRoundListModel> a;
-	AppRoundListModel model;
+		AsyncTask<Void, Integer, Integer> {
+	//ArrayList<AppRoundListModel> a;
+	//AppRoundListModel model;
 
-	public GetScoreList(Context context, AppRoundListModel roundmodel) {
-		model = roundmodel;
+	public GetScoreList(Context context, int roundmodel) {
+		//model = roundmodel;
 	}
 
 	@Override
-	protected ArrayList<AppRoundListModel> doInBackground(Void... params) {
+	protected Integer doInBackground(Void... params) {
 		try {
 			HttpResponse response;
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(DatabaseConnection.address
 					+ "/JSON/GetScoreList");
 			JSONObject data = new JSONObject();
-			data.put("RoundID", model.getRoundID());
+			/*data.put("RoundID", model.getRoundID());
 			data.put("Score", model.getScore());
 			data.put("UserID", model.getUserID());
 			data.put("Coursename", model.getCoursename());
-
+*/
 			httppost.setEntity(new ByteArrayEntity(data.toString().getBytes(
 					"UTF8")));
 			httppost.addHeader("Content-Type",
@@ -55,17 +53,17 @@ public class GetScoreList extends
 				if (entity != null) {
 					InputStream instream = entity.getContent();
 					String result = converter.convertStreamToString(instream);
-					ArrayList<AppRoundListModel> a = new ArrayList<AppRoundListModel>();
+					//ArrayList<AppRoundListModel> a = new ArrayList<AppRoundListModel>();
 					JSONArray array = new JSONArray(result);
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject row = array.getJSONObject(i);
-						AppRoundListModel appmodel = new AppRoundListModel(
+					/*	AppRoundListModel appmodel = new AppRoundListModel(
 								row.getString("Coursename"),
 								row.getInt("RoundID"), row.getInt("Score"),
-								model.getUserID());
-						a.add(appmodel);
+						*///		model.getUserID());
+						//a.add(appmodel);
 					}
-					return a;
+					return null;
 				}
 			} catch (JSONException e) {
 				// TODO: handle exception

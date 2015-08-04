@@ -3,6 +3,7 @@ package se.tr1golf;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -23,22 +24,25 @@ public class MenuActivity extends Activity {
 	
 	// Play Button
 	public void clickPlay(View view) {
+		Log.i("INFO", "clickPlay");
 		//startActivity(new Intent("android.intent.action.GAMES"));
 		startActivity(new Intent(this, GameListActivity.class));
-		finish();
 	}
 	// Settings button
 	public void clickSettings(View view) {
+		Log.i("INFO", "clickSettings");
 	//	startActivity(new Intent("android.intent.action.SETTINGS"));
 	}
 
 	// Stats button
 	public void clickStats(View view) {
+		Log.i("INFO", "clickStats");
 	//	startActivity(new Intent("android.intent.action.STATS"));
 	}
 
 	// Logout button
 	public void clickLogout(View view) {
+		Log.i("INFO", "clickLogout");
 	//	startActivity(new Intent("android.intent.action.LOGIN"));
 		finish();
 	}

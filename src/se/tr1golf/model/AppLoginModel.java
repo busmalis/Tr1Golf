@@ -1,87 +1,38 @@
 package se.tr1golf.model;
 
+import se.tr1golf.classes.User;
+
 public class AppLoginModel {
-	String Username;
-	String Password;
-	Boolean Active;
-	int UserID;
+	private User user;
 
-	public AppLoginModel(String username, String password) {
-		this.Username = username;
-		this.Password = password;
-		this.Active = false;
-		this.UserID = 0;
+	public AppLoginModel(Builder builder) {
+		this.setUser(builder.user);
 	}
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return Username;
+	public User getUser() {
+		return user;
 	}
 
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		Username = username;
+	public void setUser(User user) {
+		this.user = user;
 	}
+	
+	public static class Builder {
+		private User user;
+		
+		public Builder setUser(User user){
+			this.user = user;
+			return this;
+		}
+		
+		public AppLoginModel build(){
+			AppLoginModel model = new AppLoginModel(this);
+			validateModel(model);
+			return model;
+		}
 
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return Password;
-	}
-
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		Password = password;
-	}
-
-	/**
-	 * @return the active
-	 */
-	public Boolean getActive() {
-		return Active;
-	}
-
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(Boolean active) {
-		Active = active;
-	}
-
-	/**
-	 * @return the userID
-	 */
-	public int getUserID() {
-		return UserID;
-	}
-
-	/**
-	 * @param userID the userID to set
-	 */
-	public void setUserID(int userID) {
-		UserID = userID;
-	}
-
-	public void set_username(String username) {
-		this.Username = username;
-	}
-
-	public void set_password(String password) {
-		this.Password = password;
-	}
-
-	public String get_username() {
-		return this.Username;
-	}
-
-	public String get_password() {
-		return this.Password;
+		private void validateModel(AppLoginModel model) {
+			
+		}
 	}
 }
